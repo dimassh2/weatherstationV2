@@ -1,0 +1,237 @@
+/* --- Konfigurasi Dasar & Font --- */
+body {
+    font-family: 'Press-Start-2P', cursive;
+    background-color: #064e3b; /* Meja poker hijau gelap */
+    color: #ffffff;
+    padding: 1rem;
+    -webkit-font-smoothing: none;
+    -moz-osx-font-smoothing: grayscale;
+    image-rendering: pixelated;
+    
+    /* Tambahkan tekstur noise/pixelated */
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 800 800' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    background-size: cover;
+    background-blend-mode: overlay;
+    background-position: 50%;
+}
+
+/* --- Layout Utama --- */
+.poker-table {
+    background-color: rgba(16, 185, 129, 0.9); /* Latar poker dengan sedikit transparansi */
+    border: 6px solid #000000;
+    box-shadow: 8px 8px 0px #000000;
+    padding: 1.5rem;
+    backdrop-filter: blur(2px);
+}
+
+/* --- Kartu Data --- */
+.dealer-card {
+    background-color: #f3f4f6;
+    border: 4px solid #000;
+    box-shadow: 6px 6px 0px #000000;
+    color: #000;
+    padding: 1.5rem;
+    transition: background-color 0.5s ease;
+}
+
+.playing-card {
+    background-color: #fefce8; /* yellow-50 */
+    border: 4px solid #000000;
+    border-radius: 8px;
+    color: #1f2937;
+    box-shadow: 6px 6px 0px #000000;
+    position: relative;
+    padding: 1.5rem 1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+}
+
+.playing-card:hover {
+    transform: translateY(-10px) rotate(3deg);
+    box-shadow: 10px 15px 15px rgba(0,0,0,0.3);
+}
+.playing-card .card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+      
+/* Simbol kartu di sudut */
+.playing-card::before, .playing-card::after {
+    font-family: serif;
+    position: absolute;
+    font-size: 2.5rem;
+    line-height: 1;
+}
+.playing-card::before { top: 0.5rem; left: 0.75rem; }
+.playing-card::after { bottom: 0.5rem; right: 0.75rem; transform: rotate(180deg); }
+.card-temp::before, .card-temp::after { content: '♥'; color: #dc2626; }
+.card-humidity::before, .card-humidity::after { content: '♣'; color: #2563eb; }
+.card-pressure::before, .card-pressure::after { content: '♠'; color: #171717; }
+.card-altitude::before, .card-altitude::after { content: '♦'; color: #ea580c; }
+
+.card-label { font-size: 0.8em; line-height: 1.2; }
+.card-value { font-size: 1.8em; line-height: 1; }
+.card-unit { font-size: 0.9em; margin-left: 0.25rem; }
+
+/* --- Bagian Gemini AI di Halaman Utama (BARU) --- */
+.gemini-main-container {
+    background-color: rgba(0,0,0,0.4);
+    border: 4px solid #000;
+    box-shadow: 6px 6px 0px #000;
+    padding: 1.5rem;
+}
+#gemini-main-content {
+    background-color: rgba(17, 24, 39, 0.8); /* Latar gelap transparan */
+    border-color: #fde047; /* Border kuning */
+    color: #ffffff;
+}
+
+/* --- Grafik & Riwayat --- */
+.chart-container {
+    background-color: rgba(0, 0, 0, 0.4);
+    border: 4px solid #000;
+    box-shadow: 6px 6px 0px #000;
+    padding: 1rem;
+}
+.chart-title {
+    font-size: 0.8em;
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #fde047;
+}
+
+.action-button {
+    background-color: #fde047;
+    color: #000000;
+    border: 4px solid #000;
+    padding: 0.8rem 1.5rem;
+    font-family: 'Press-Start-2P', cursive;
+    font-size: 1em;
+    box-shadow: 4px 4px 0px #000;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+.action-button:hover {
+    background-color: #facc15;
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px #000;
+}
+.action-button:active {
+    transform: translate(4px, 4px);
+    box-shadow: 0px 0px 0px #000;
+}
+
+/* --- Modal Riwayat --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    overflow-y: auto;
+    padding: 1rem; /* Padding untuk mobile */
+}
+.modal-content {
+    background-color: #10B981;
+    border: 6px solid #000;
+    padding: 1rem; /* Padding untuk mobile */
+    width: 100%;
+    max-width: 1200px;
+    box-shadow: 8px 8px 0 #000;
+}
+.hidden { display: none; }
+
+.filter-controls .date-picker {
+    background-color: #fefce8;
+    color: #000;
+    border: 4px solid #000;
+    padding: 0.5rem;
+    font-family: 'Press-Start-2P', cursive;
+    font-size: 0.8em;
+    cursor: pointer;
+}
+
+/* --- Tabel Riwayat --- */
+.history-table-container {
+    max-height: 400px;
+    overflow-y: auto;
+    border: 4px solid #000;
+    background-color: rgba(0,0,0,0.3);
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 4px solid #000;
+    font-size: 0.8em;
+}
+thead {
+    background-color: #fde047;
+    color: #000;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+tbody tr:nth-child(even) {
+    background-color: rgba(0,0,0,0.2);
+}
+
+/* --- Video Overlay Style --- */
+#video-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 2000; opacity: 0; transition: opacity 0.5s ease;
+    pointer-events: none;
+}
+#video-overlay.show { opacity: 1; pointer-events: all; }
+#rain-video { max-width: 90%; max-height: 90%; border: 5px solid #fff; box-shadow: 0 0 20px rgba(0,255,255,0.5); }
+
+
+/* ===== ATURAN RESPONSIVE BARU UNTUK MOBILE ===== */
+@media (max-width: 768px) {
+    body {
+        padding: 0.5rem;
+    }
+    .poker-table {
+        padding: 1rem;
+        border-width: 4px;
+        box-shadow: 4px 4px 0px #000;
+    }
+    h1 {
+        font-size: 1.5rem; /* Ukuran H1 lebih kecil */
+    }
+    .dealer-card h2 {
+        font-size: 1.8rem; /* Ukuran teks kondisi */
+    }
+    .card-value {
+        font-size: 1.5rem; /* Ukuran nilai di kartu */
+    }
+    .card-label, .card-unit {
+        font-size: 0.7em;
+    }
+    .playing-card::before, .playing-card::after {
+        font-size: 1.5rem; /* Simbol kartu lebih kecil */
+    }
+    .action-button {
+        font-size: 0.8em;
+        padding: 0.7rem 1rem;
+    }
+    .modal-content {
+        padding: 1rem;
+    }
+    .filter-controls {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
