@@ -4,10 +4,8 @@
  */
 async function fetchSensorData() {
     try {
-        // SESUAIKAN URL INI DENGAN LOKASI FILE PHP ANDA DI SERVER WEB (misal http://localhost/weather_dashboard_php/get_latest_data.php)
-        // Jika server web Anda berjalan di port non-standar (misal Apache di 8080), gunakan:
-        // const response = await fetch('http://localhost:8080/weather_dashboard_php/get_latest_data.php');
-        const response = await fetch('http://localhost/weather_dashboard_php/get_latest_data.php'); 
+        // --- URL DIPERBAIKI menjadi path relatif ---
+        const response = await fetch('./get_latest_data.php'); 
         
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);

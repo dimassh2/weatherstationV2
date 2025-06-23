@@ -3,107 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather Station Dashboard</title>
+    <title>Balatro Weather Desk</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Orbitron:wght@500&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="poker-table max-w-7xl mx-auto">
-        <header class="text-center mb-8">
-            <h1 class="text-3xl md:text-4xl">WEATHER STATION</h1>
-            <p class="text-sm text-yellow-300" id="timestamp">Menghubungkan...</p>
+    <div class="poker-table">
+        <header class="main-header">
+            <h1 class="main-title">WEATHER DESK</h1>
+            <p class="subtitle" id="timestamp">Menghubungkan...</p>
         </header>
 
-        <div class="dealer-card flex flex-col items-center justify-center text-center mb-8" id="weather-condition-card">
-            <div id="icon-container" class="w-20 h-20 mb-4"></div>
-            <h2 class="text-4xl" id="weather-condition-text">MEMUAT</h2>
-        </div>
+        <section id="weather-condition-card" class="dealer-card">
+            <div id="icon-container" class="weather-icon"></div>
+            <h2 id="weather-condition-text">MEMUAT</h2>
+        </section>
 
-        <main class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
-            <div class="playing-card card-temp"><div class="card-content"><div class="card-label">SUHU</div><div class="flex items-baseline"><span id="temp-value" class="card-value">--</span><span class="card-unit">°C</span></div></div></div>
-            <div class="playing-card card-humidity"><div class="card-content"><div class="card-label">LEMBAP</div><div class="flex items-baseline"><span id="humidity-value" class="card-value">--</span><span class="card-unit">%</span></div></div></div>
-            <div class="playing-card card-pressure"><div class="card-content"><div class="card-label">TEKANAN</div><div class="flex items-baseline"><span id="pressure-value" class="card-value">----</span><span class="card-unit text-sm">hPa</span></div></div></div>
-            <div class="playing-card card-altitude"><div class="card-content"><div class="card-label">MDPL</div><div class="flex items-baseline"><span id="altitude-value" class="card-value">----</span><span class="card-unit text-sm">m</span></div></div></div>
-        </main>
+        <section class="hand-of-cards">
+            <div class="playing-card" data-suit="♥">
+                <div class="card-content">
+                    <div class="card-label">SUHU</div>
+                    <div class="card-value" id="temp-value">--</div>
+                    <div class="card-unit">°C</div>
+                </div>
+            </div>
+            <div class="playing-card" data-suit="♠">
+                <div class="card-content">
+                    <div class="card-label">LEMBAP</div>
+                    <div class="card-value" id="humidity-value">--</div>
+                    <div class="card-unit">%</div>
+                </div>
+            </div>
+            
+            <div id="center-card" class="playing-card" data-suit="★">
+                <div id="center-card-placeholder" class="card-content">
+                     <div class="card-label">VIDEO</div>
+                     <div class="card-value">--</div>
+                     <div class="card-unit">Tidak Aktif</div>
+                </div>
+                <video id="rain-video" class="rain-video-screen hidden"></video>
+                <div id="play-button-overlay" class="play-overlay hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+                <!-- KONTROL VIDEO BARU -->
+                <div id="video-controls" class="video-controls hidden">
+                    <button id="play-pause-btn" class="control-button">
+                        <svg id="pause-icon" class="hidden" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path></svg>
+                        <svg id="play-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>
+                    </button>
+                    <input type="range" id="progress-bar" class="progress-bar" value="0" step="1">
+                    <button id="stop-btn" class="control-button">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h12v12H6z"></path></svg>
+                    </button>
+                </div>
+            </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-            <div class="chart-container h-64 sm:h-80">
-                <h3 class="chart-title">REAL-TIME: SUHU & LEMBAP</h3>
-                <canvas id="chart-temp-humidity"></canvas>
+            <div class="playing-card" data-suit="♦">
+                <div class="card-content">
+                    <div class="card-label">TEKANAN</div>
+                    <div class="card-value" id="pressure-value">----</div>
+                    <div class="card-unit">hPa</div>
+                </div>
             </div>
-            <div class="chart-container h-64 sm:h-80">
-                <h3 class="chart-title">REAL-TIME: TEKANAN & MDPL</h3>
-                <canvas id="chart-pressure-altitude"></canvas>
+            <div class="playing-card" data-suit="♣">
+                 <div class="card-content">
+                    <div class="card-label">MDPL</div>
+                    <div class="card-value" id="altitude-value">----</div>
+                    <div class="card-unit">m</div>
+                </div>
             </div>
-        </div>
+        </section>
 
-        <div id="gemini-main-section" class="gemini-main-container mb-8">
-            <h3 class="text-xl mb-4 text-yellow-300 text-center">REKOMENDASI CUACA DARI GEMINI AI</h3>
-            <div id="gemini-main-content" class="dealer-card p-4 text-white text-base overflow-y-auto min-h-[150px]">
-                <p>Tekan tombol di bawah untuk mendapatkan saran cuaca berdasarkan data terkini...</p>
-            </div>
-            <div class="text-center mt-6">
-                <button id="get-gemini-advice-button" class="action-button text-sm">DAPATKAN SARAN CUACA</button>
-            </div>
-        </div>
-        
-        <div class="text-center mt-8">
-            <button id="history-button" class="action-button">LIHAT RIWAYAT DATA</button>
-        </div>
+        <section class="chart-section">
+            <div class="chart-container"><h3 class="chart-title">REAL-TIME: SUHU & LEMBAP</h3><canvas id="chart-temp-humidity"></canvas></div>
+            <div class="chart-container"><h3 class="chart-title">REAL-TIME: TEKANAN & MDPL</h3><canvas id="chart-pressure-altitude"></canvas></div>
+        </section>
+
+        <footer class="action-footer">
+            <button id="history-button" class="action-button">RIWAYAT</button>
+            <button id="gemini-advice-button" class="action-button">SARAN AI</button>
+        </footer>
     </div>
 
+    <!-- MODAL RIWAYAT (Struktur diperbaiki) -->
     <div id="history-modal" class="modal-overlay hidden">
         <div class="modal-content">
-            <h2 class="text-2xl mb-4 text-center">RIWAYAT DATA CUACA</h2>
-            
-            <div class="filter-controls mb-6 flex flex-col sm:flex-row items-center justify-center gap-4">
-                <label for="history-date-picker" class="text-lg">Pilih Tanggal:</label>
-                <input type="date" id="history-date-picker" class="date-picker">
-                <button id="filter-history-button" class="action-button text-sm">TAMPILKAN</button>
+            <div class="modal-header">
+                <h2 class="modal-title">RIWAYAT DATA CUACA</h2>
+                <div class="filter-controls">
+                    <label for="history-date-picker">Pilih Tanggal:</label>
+                    <input type="date" id="history-date-picker" class="date-picker">
+                    <button id="filter-history-button" class="action-button small">TAMPILKAN</button>
+                </div>
             </div>
-
-            <div class="history-table-container mb-8">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Waktu</th>
-                            <th>Kondisi</th>
-                            <th>Suhu</th>
-                            <th>Lembap</th>
-                        </tr>
-                    </thead>
-                    <tbody id="history-table-body">
-                        </tbody>
-                </table>
+            <div class="modal-body">
+                <div class="history-table-container">
+                    <table><thead><tr><th>Waktu</th><th>Kondisi</th><th>Suhu (°C)</th><th>Lembap (%)</th></tr></thead><tbody id="history-table-body"></tbody></table>
+                </div>
+                <div class="chart-section-modal">
+                    <div class="chart-container"><h4 class="chart-title">RIWAYAT SUHU & LEMBAP</h4><canvas id="history-chart-1"></canvas></div>
+                    <div class="chart-container"><h4 class="chart-title">RIWAYAT TEKANAN & MDPL</h4><canvas id="history-chart-2"></canvas></div>
+                </div>
             </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div class="chart-container h-64"><h4 class="chart-title">SUHU & LEMBAP RIWAYAT</h4><canvas id="history-chart-1"></canvas></div>
-                <div class="chart-container h-64"><h4 class="chart-title">TEKANAN & MDPL RIWAYAT</h4><canvas id="history-chart-2"></canvas></div>
-            </div>
-            
-            <div class="text-center">
-              <button id="close-modal-button" class="action-button mt-8">TUTUP</button>
+            <div class="modal-footer">
+                <button id="close-history-modal-button" class="action-button close-button">TUTUP</button>
             </div>
         </div>
     </div>
 
-    <div id="video-overlay" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-[2000] hidden">
-        <video id="rain-video" class="max-w-full max-h-full" muted autoplay>
-            <source src="assets/rain_clip.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
+    <!-- MODAL SARAN GEMINI -->
+    <div id="gemini-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">SARAN CUACA DARI AI</h2>
+            </div>
+            <div class="modal-body">
+                <div id="gemini-modal-content" class="gemini-content-area">
+                    <p>Meminta saran...</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="close-gemini-modal-button" class="action-button close-button">TUTUP</button>
+            </div>
+        </div>
     </div>
 
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const videoElement = document.getElementById('rain-video');
+            if (videoElement) {
+                videoElement.src = 'assets/rain_clip.mp4';
+            }
+        });
+    </script>
     <script src="api/sensor.js"></script>
     <script src="app.js"></script>
-
 </body>
 </html>
