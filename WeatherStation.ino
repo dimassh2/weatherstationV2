@@ -244,7 +244,7 @@ void updateLCD() {
       lcd.setCursor(0, 0);
       lcd.print("S:" + String(temperature, 1) + "C  K:" + String(humidity, 0) + "%");
       lcd.setCursor(0, 1);
-      lcd.print("T:" + String(pressure, 0) + "hPa T:" + String(altitude, 0) + "m");
+      lcd.print("T:" + String(pressure, 0) + "hPa K:" + String(altitude, 0) + "m");
       break;
     case 1:
       lcd.setCursor(0, 0);
